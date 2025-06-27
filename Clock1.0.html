@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glowy Multicolor Clock</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }.clock-container {
+        text-align: center;
+        padding: 20px;
+        border: 2px solid white;
+        border-radius: 10px;
+        box-shadow: 0 0 40px white;
+        animation: glow 3s infinite;
+    }
+
+    .time-display {
+        font-size: 3em;
+        margin-bottom: 20px;
+        animation: colorCycle 3s infinite;
+    }
+
+    @keyframes glow {
+        0% { box-shadow: 0 0 40px green; }
+        25% { box-shadow: 0 0 40px blue; }
+        50% { box-shadow: 0 0 40px yellow; }
+        75% { box-shadow: 0 0 40px orange; }
+        100% { box-shadow: 0 0 40px white; }
+    }
+
+    @keyframes colorCycle {
+        0% { color: green; }
+        25% { color: blue; }
+        50% { color: yellow; }
+        75% { color: orange; }
+        100% { color: white; }
+    }
+</style>
+
+</head>
+<body>
+    <div class="clock-container">
+        <div class="time-display" id="time-display">--:--:-- AM</div>
+    </div><script>
+    function updateClock() {
+        const timeDisplay = document.getElementById('time-display');
+        const now = new Date();
+        timeDisplay.textContent = formatTime(now);
+    }
+
+    function formatTime(date) {
+        let hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 should be 12
+        return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)} ${ampm}`;
+    }
+
+    function padZero(num) {
+        return num < 10 ? '0' + num : num;
+    }
+
+    // Update the clock every second
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call to display immediately
+</script>
+
+</body>
+</html>
